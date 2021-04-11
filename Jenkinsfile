@@ -31,10 +31,11 @@ pipeline {
                 }
 		stage('Tag Docker Image') {
                         steps {
-                                pom = readMavenPom file: 'pom.xml'
-                                sh 'docker tag addressbook:latest vasistaops/addressbook:pom.version'
                         }
-                }
+				script { 
+					def version = readMavenPom().getVersion()
+					sh 'docker tag addressbook:latest vasistaops/addressbook:${version}'
+                		}
 		stage('Push Docker Image') {
                         steps {
                                 withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS', passwordVariable: 'DOCKER_HUB_PWD', usernameVariable: 'DOCKER_HUB_USER')]) {
