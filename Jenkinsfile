@@ -14,14 +14,33 @@ pipeline {
                                 sh 'mvn test'
                         }
                 }
-                stage('compile') {
+                stage('Compile') {
                         steps { 
                                 sh 'mvn compile'
                         }
 }
-                stage('package') {
+                stage('Package') {
                         steps { 
                                 sh 'mvn package'
+                        }
+                }
+		stage('Build Docker Image') {
+                        steps {
+                                sh 'docker build -t addressbook:latest .'
+                        }
+                }
+		stage('Tag Docker Image') {
+                        steps {
+                                pom = readMavenPom file: 'pom.xml'
+                                sh 'docker tag addressbook:latest vasistaops/addressbook:pom.version'
+                        }
+                }
+		stage('Push Docker Image') {
+                        steps {
+                                withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS', passwordVariable: 'DOCKER_HUB_PWD', usernameVariable: 'DOCKER_HUB_USER')]) {
+                                sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PWD'
+                                }
+                                sh 'docker push vasistaops/addressbook:pom.version'
                         }
                 }
         }
