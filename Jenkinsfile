@@ -40,7 +40,6 @@ pipeline {
 				sh "echo ${pom.version}"
 				sh "docker tag addressbook:latest sjampana20/addressbook:${pom.version}"
                 		}
-			}
 		}
 		stage('Push Docker Image') {
                         steps {
