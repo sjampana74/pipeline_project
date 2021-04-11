@@ -33,7 +33,7 @@ pipeline {
                         steps {
 				script { 
 					def version = readMavenPom().getVersion()
-					sh 'docker tag addressbook:latest vasistaops/addressbook:${version}'
+					sh 'docker tag addressbook:latest sjampana20/addressbook:${version}'
                 		}
 			}
 		}
