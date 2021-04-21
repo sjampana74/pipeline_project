@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: addressbook-project
-        image: phanivch/addressbook:2.0
+        image: sjampana20/addressbook:2.0
         ports:
         - containerPort: 8080
