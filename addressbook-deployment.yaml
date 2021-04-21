@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: addressbook-deployment
+spec:
+  selector:
+    matchLabels:
+      app: addressbook-project
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: addressbook-project
+    spec:
+      containers:
+      - name: addressbook-project
+        image: phanivch/addressbook:2.0
+        ports:
+        - containerPort: 8080
